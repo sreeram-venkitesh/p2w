@@ -6,6 +6,10 @@
     <title>p2w</title>
     <script type="text/javascript" src="https://wzrd.in/standalone/p2pt@1.2.0"></script>
     <link rel="stylesheet" href="https://unpkg.com/wingcss"/>
+    <script>
+        const roomId = '<%= roomId %>'
+        console.log(roomId)
+    </script>
 </head>
 <body>
     <div style="text-align: center; margin:20px;">
@@ -14,22 +18,9 @@
         <h5 id='peopleCount'>People online : 1</h5>
         <textarea name="text" id="text" cols="30" rows="10" style="width: 60%; height:65vh; font-size:24px;"></textarea>
     </div>
-    <script src='./main.js'></script>
+    <script src='./main.js' defer></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script>
-        let text = document.getElementById('text');
-        $(function () {
-            var socket = io();
-            $('textarea').keyup(function(e) {
-                e.preventDefault(); // prevents page reloading
-                socket.emit('chat message', $('#text').val());
-                return false;
-            });
-            socket.on('chat message', function(msg){
-                text.value = String(msg);
-            });
-        });
-    </script>
+  
 </body>
 </html>
