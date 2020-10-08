@@ -5,17 +5,32 @@ const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 4)
 const http = require('http').createServer(app);
 var io = require('socket.io')(http);
 
+
+app.use(express.json());       
+app.use(express.urlencoded()); 
+
 app.use(express.static(__dirname + '/views'));
 app.set('view engine', 'ejs');
 
 app.get('/',(req,res)=>{
-    // res.render('index')
+    res.render('home')
+})
+
+app.post('/',(req,res)=>{
     res.redirect(`/${nanoid()}`)
+})
+
+app.post('/join',(req,res)=>{
+    res.redirect(`/${req.body.code}`)
 })
 
 app.get('/:room',(req,res)=>{
     res.render('index',{roomId:req.params.room})
 })
+
+app.use(function (req,res,next){
+	res.status(404).render('404');
+});
 
 // io.on('connection', (socket) => {
 //     console.log('a user connected');
