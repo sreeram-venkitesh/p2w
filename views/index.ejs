@@ -11,8 +11,25 @@
     <div style="text-align: center; margin:20px;">
         <h1>p2w</h1>
         <h2>peer2peer writing</h2>
+        <h5 id='peopleCount'>People online : 1</h5>
         <textarea name="text" id="text" cols="30" rows="10" style="width: 60%; height:65vh; font-size:24px;"></textarea>
     </div>
     <script src='./main.js'></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script>
+        let text = document.getElementById('text');
+        $(function () {
+            var socket = io();
+            $('textarea').keyup(function(e) {
+                e.preventDefault(); // prevents page reloading
+                socket.emit('chat message', $('#text').val());
+                return false;
+            });
+            socket.on('chat message', function(msg){
+                text.value = String(msg);
+            });
+        });
+    </script>
 </body>
 </html>
